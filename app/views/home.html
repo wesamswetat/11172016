@@ -1,0 +1,9 @@
+<div  class="raper">
+    <div ng-click="showNodes()" class="big-circle">
+        <div class="small-circle"></div>
+    </div>
+    <div ng-repeat="node in nodes track by $index"
+         class="children"
+         ng-click="childrenClicked(node.label)"
+         ng-style="{{arrayOfStyle[$index]}}"></div>
+</div>
