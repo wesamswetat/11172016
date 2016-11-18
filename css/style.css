@@ -1,3 +1,7 @@
+
+*{
+    box-sizing: border-box;
+}
 .raper{
     display: inline-block;
     position: relative;
@@ -11,6 +15,10 @@
     -webkit-border-radius: 50px;
     border-radius: 50px;
     position: relative;
+}
+
+.big-circle:hover, .pointer:hover, .all-imgs {
+    cursor: pointer
 }
 
 .small-circle {
@@ -33,6 +41,8 @@
     left: 200%;
 }
 
+
+
 .small-children-circle{
     position: absolute;
     background: #a9aaab;
@@ -42,4 +52,38 @@
     top: 18%;
     left: 18%;
     border: 1px solid #fff;
+}
+
+/* ################## PICTURE STYLE ################ */
+
+.container{
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.main-img{
+    width: 100%;
+    height: 250px;
+}
+
+ul {
+    overflow: hidden;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+
+.all-imgs  {
+    list-style: none;
+    float: left;
+    margin-right: 3px;
+    width: 19%;
+}
+
+.all-imgs > img{
+    width: 95%;
+    height: 72px;
 }

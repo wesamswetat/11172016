@@ -9,7 +9,7 @@
 
     homePage.controller('homeController', homePageControllerFunction);
 
-    function homePageControllerFunction($scope, $http) {
+    function homePageControllerFunction($scope, $http, $location, mainService) {
         $scope.arrayOfStyle = [];
         $scope.showNodes = function () {
             $http({
@@ -29,47 +29,69 @@
 
             $scope.nodes = response.data.data.children;
 
-            for (var i = 0; i < $scope.nodes.length; i = i + 1) {
-                var TopLeft = {};
-                if (i < 5) {
-                    TopLeft = {
-                        'background': '#d3d3d3',
-                        'left': 100 * Math.cos(90 / ($scope.nodes.length - 1) * i * (Math.PI / 90)) + 'px',
-                        'top': 100 * Math.sin(90 / ($scope.nodes.length - 1) * i * (Math.PI / 90)) + 'px'
-                    };
-                } else if (i >= 5) {
-                    TopLeft = {
-                        'background': '#d3d3d3',
-                        'left': 150 * Math.cos(60 / ($scope.nodes.length - 1) * (i - 5) * (Math.PI / 90)) + 'px',
-                        'top': 150 * Math.sin(60 / ($scope.nodes.length - 1) * (i -5) * (Math.PI / 90)) + 'px'
-                    };
-                }
-                if ($scope.nodes[i].type === 1){
-                    TopLeft.background = '#ADD8E6';
-                }
-                $scope.arrayOfStyle.push(TopLeft);
+            // I failed to get the pictures from the API
+            // I generate 10 images like DATA structure example in the PDF
+            for (var z = 0; z < 10; z = z + 1) {
+                var x = {
+                    label: "picture" + z,
+                    type: 1,
+                    url: "http://placehold.it/350?text=picture" + z
+                };
+
+                $scope.nodes.splice( Math.floor((Math.random() * 10) + 1) , 0, x);
+
             }
-            console.log($scope.nodes);
+
+
+            var
+                topLeft = {},
+                r = 100, temp = 0;  // radius;
+
+            for (var i = 0; i < $scope.nodes.length; i = i + 1) {
+
+                console.log(i, temp, i - temp);
+                if ((35 * (i - temp)) > (2 * Math.PI * r / 4)) {
+                    r = r + 50;
+                    temp = i;
+                }
+
+                topLeft = {
+                    'background': '#d3d3d3',
+                    'left': Math.cos(35 * (i - temp) / r) * r + 'px',
+                    'top': Math.sin(35 * (i - temp) / r) * r + 'px'
+
+                };
+
+                if ($scope.nodes[i].type === 1) {
+                    topLeft.background = '#ADD8E6';
+                }
+                $scope.arrayOfStyle.push(topLeft);
+
+            }
+
+            mainService.setDataFromApi($scope.nodes);
         }
 
-        function errorCallBack(response, status) {
-            console.log('error',response.status);
-            if (response.status === 599){
+        function errorCallBack(response) {
+            if (response.status === 599) {
                 alert('an error that occurs from time to time (representing a network connection error)')
             }
-            if (response.status === 401){
+            if (response.status === 401) {
                 alert('token is incorrect')
             }
-            if (response.status === 404){
+            if (response.status === 404) {
                 alert('path is not found')
             }
-            if (response.status === 404){
+            if (response.status === 404) {
                 alert('unknown error')
             }
         }
 
-        $scope.childrenClicked = function(item){
-            console.log(item);
+        $scope.childrenClicked = function (item) {
+
+            if (item.hasOwnProperty('url') && item.type === 1) {
+                $location.path('/picture/' + item.label);
+            }
         }
     }
 

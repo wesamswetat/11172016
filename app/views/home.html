@@ -4,6 +4,7 @@
     </div>
     <div ng-repeat="node in nodes track by $index"
          class="children"
-         ng-click="childrenClicked(node.label)"
+         ng-class="{pointer: node.type == 1}"
+         ng-click="node.type == 1 && childrenClicked(node)"
          ng-style="{{arrayOfStyle[$index]}}"></div>
 </div>

@@ -15,9 +15,12 @@
                 templateUrl: 'app/views/home.html',
                 controller: 'homeController'
             })
-            .when('/picture', {
+            .when('/picture/:label', {
                 templateUrl: 'app/views/picture.html',
                 controller: 'pictureController'
             })
+            .otherwise({
+                redirectTo: '/'
+            });
     }
 })();

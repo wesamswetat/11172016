@@ -1,1 +1,11 @@
-{{xxx}}
+
+<div class="container">
+    <img class="main-img" src="{{mainImgSrc}}" alt="{{label}}">
+    <div >
+        <ul >
+            <li class="all-imgs" ng-repeat="img in data" ng-if="img.type === 1 && img.label != label">
+                <img ng-click="showImg(img)"  src="{{img.url}}" alt="">
+            </li>
+        </ul>
+    </div>
+</div>
